@@ -15,6 +15,9 @@ use React\Async;
 use React\Http\Browser;
 use React\Promise;
 
+/**
+ * @implements PoolInterface<Request|callable(ConnectorInterface): Response, Response>
+ */
 final class Pool implements PoolInterface
 {
     use PoolTrait;
