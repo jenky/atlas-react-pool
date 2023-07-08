@@ -1,6 +1,6 @@
 {
     "name": "jenky/atlas-pool-react",
-    "description": "Send concurrent requests for Atlas",
+    "description": "Send concurrent requests for Atlas using ReactPHP",
     "keywords": [
         "jenky",
         "atlas",
@@ -8,7 +8,8 @@
         "concurrent-requests",
         "parallel-requests",
         "async",
-        "await"
+        "await",
+        "react"
     ],
     "homepage": "https://github.com/jenky/atlas-pool-react",
     "license": "MIT",
