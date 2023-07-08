@@ -1,0 +1,79 @@
+{
+    "name": "jenky/atlas-pool-react",
+    "description": "Send concurrent requests for Atlas",
+    "keywords": [
+        "jenky",
+        "atlas",
+        "pool",
+        "concurrent-requests",
+        "parallel-requests",
+        "async",
+        "await"
+    ],
+    "homepage": "https://github.com/jenky/atlas-pool-react",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lynh",
+            "email": "contact@lynh.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "jenky/atlas-pool": "^1.x-dev",
+        "clue/mq-react": "^1.5",
+        "react/async": "^4.1",
+        "react/http": "^1.9"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.15",
+        "guzzlehttp/guzzle": "^7.5",
+        "jenky/atlas-mock-client": "^1.0",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.0",
+        "symfony/var-dumper": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jenky\\Atlas\\Pool\\React\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jenky\\Atlas\\Pool\\React\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": [
+            "vendor/bin/phpstan analyse"
+        ],
+        "cs": [
+            "vendor/bin/php-cs-fixer fix"
+        ],
+        "test": [
+            "vendor/bin/phpunit"
+        ],
+        "coverage": [
+            "vendor/bin/phpunit --coverage"
+        ],
+        "check": [
+            "@cs --dry-run",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
