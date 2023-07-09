@@ -12,8 +12,11 @@ use React\Http\Browser;
 
 final class Client implements ClientInterface
 {
-    public function __construct(private Browser $browser)
+    private Browser $browser;
+
+    public function __construct(?Browser $browser = null)
     {
+        $this->browser = $browser ?? new Browser();
     }
 
     public function sendRequest(RequestInterface $request): ResponseInterface

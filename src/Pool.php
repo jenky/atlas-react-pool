@@ -14,6 +14,7 @@ use Jenky\Atlas\Response;
 use React\Async;
 use React\Http\Browser;
 use React\Promise;
+use Symfony\Component\HttpClient\Psr18Client;
 
 /**
  * @implements PoolInterface<Request|callable(ConnectorInterface): Response, Response>
@@ -26,10 +27,18 @@ final class Pool implements PoolInterface
 
     public function __construct(ConnectorInterface $connector)
     {
-        if ($connector->client() instanceof Client) {
+        $client = $connector->client();
+
+        if ($client instanceof Client) {
             $this->connector = clone $connector;
         } elseif (method_exists($connector, 'withClient')) {
-            $this->connector = $connector->withClient(new Client(new Browser()));
+            if ($client instanceof Psr18Client) {
+                $newClient = new SymfonyClient();
+            } else {
+                $newClient = new Client(new Browser());
+            }
+
+            $this->connector = $connector->withClient($newClient);
         } else {
             throw new UnsupportedException('The client is not supported.');
         }

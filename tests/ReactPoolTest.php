@@ -25,7 +25,10 @@ class ReactPoolTest extends TestCase
 
     public function test_react_sending_lots_of_requests(): void
     {
-        $connector = new NullConnector();
+        // $connector = new NullConnector();
+        $connector = (new NullConnector())->withClient(
+            new \Symfony\Component\HttpClient\Psr18Client()
+        );
 
         $connector->middleware()->push(
             Interceptor::response(function (ResponseInterface $response) {
