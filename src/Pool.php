@@ -23,11 +23,11 @@ final class Pool implements PoolInterface
 {
     use PoolTrait;
 
-    private ConnectorInterface $connector;
+    // private ConnectorInterface $connector;
 
-    public function __construct(ConnectorInterface $connector)
+    public function __construct(private ConnectorInterface $connector)
     {
-        $client = $connector->client();
+        /* $client = $connector->client();
 
         if ($client instanceof Client) {
             $this->connector = clone $connector;
@@ -41,7 +41,7 @@ final class Pool implements PoolInterface
             $this->connector = $connector->withClient($newClient);
         } else {
             throw new UnsupportedException('The client is not supported.');
-        }
+        } */
     }
 
     public function send(iterable $requests): array

@@ -75,7 +75,7 @@ final class SymfonyClient implements ClientInterface
         }
     }
 
-    public function createResponse(SymfonyResponseInterface $response): PromiseInterface
+    private function createResponse(SymfonyResponseInterface $response): PromiseInterface
     {
         $defer = new Deferred();
 
@@ -86,7 +86,7 @@ final class SymfonyClient implements ClientInterface
                 foreach ($values as $value) {
                     try {
                         $psrResponse = $psrResponse->withAddedHeader($name, $value);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (\InvalidArgumentException) {
                         // ignore invalid header
                     }
                 }
