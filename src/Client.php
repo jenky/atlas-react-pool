@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Jenky\Atlas\Pool\React;
 
-use Psr\Http\Client\ClientInterface;
+use Jenky\Atlas\Pool\AsyncClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use React\Async;
 use React\Http\Browser;
 
-final class Client implements ClientInterface
+final class Client implements AsyncClientInterface
 {
     private Browser $browser;
 

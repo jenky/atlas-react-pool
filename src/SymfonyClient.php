@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jenky\Atlas\Pool\React;
 
 use Http\Discovery\Psr17FactoryDiscovery;
-use Psr\Http\Client\ClientInterface;
+use Jenky\Atlas\Pool\AsyncClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,8 +21,9 @@ use Symfony\Component\HttpClient\Response\StreamWrapper;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface as SymfonyResponseInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-final class SymfonyClient implements ClientInterface
+final class SymfonyClient implements AsyncClientInterface, ResetInterface
 {
     private HttpClientInterface $client;
 
@@ -95,17 +96,32 @@ final class SymfonyClient implements ClientInterface
             $body = $response instanceof StreamableInterface ? $response->toStream(false) : StreamWrapper::createResource($response, $this->client);
             $body = $this->streamFactory->createStreamFromResource($body);
 
-            // if ($body->isSeekable()) {
-            //     try {
-            //         $body->seek(0);
-            //     } catch (\Throwable $e) {
-            //         $defer->reject($e);
-            //     }
-            // }
+            if ($body->isSeekable()) {
+                try {
+                    $body->seek(0);
+                } catch (\Throwable $e) {
+                    // $defer->reject($e);
+                }
+            }
 
             $defer->resolve($psrResponse->withBody($body));
         });
 
         return $defer->promise();
+    }
+
+    public function withOptions(array $options): static
+    {
+        $clone = clone $this;
+        $clone->client = $clone->client->withOptions($options);
+
+        return $clone;
+    }
+
+    public function reset(): void
+    {
+        if ($this->client instanceof ResetInterface) {
+            $this->client->reset();
+        }
     }
 }
