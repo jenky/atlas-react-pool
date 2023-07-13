@@ -6,14 +6,11 @@ namespace Jenky\Atlas\Pool\React;
 
 use Clue\React\Mq\Queue;
 use Jenky\Atlas\Contracts\ConnectorInterface;
-use Jenky\Atlas\Pool\Exceptions\UnsupportedException;
 use Jenky\Atlas\Pool\PoolInterface;
 use Jenky\Atlas\Pool\PoolTrait;
 use Jenky\Atlas\Request;
 use Jenky\Atlas\Response;
 use React\Async;
-use React\Http\Browser;
-use Symfony\Component\HttpClient\Psr18Client;
 
 /**
  * @implements PoolInterface<Request|callable(ConnectorInterface): Response, Response>
@@ -22,25 +19,8 @@ final class Pool implements PoolInterface
 {
     use PoolTrait;
 
-    // private ConnectorInterface $connector;
-
     public function __construct(private ConnectorInterface $connector)
     {
-        /* $client = $connector->client();
-
-        if ($client instanceof Client) {
-            $this->connector = clone $connector;
-        } elseif (method_exists($connector, 'withClient')) {
-            if ($client instanceof Psr18Client) {
-                $newClient = new SymfonyClient();
-            } else {
-                $newClient = new Client(new Browser());
-            }
-
-            $this->connector = $connector->withClient($newClient);
-        } else {
-            throw new UnsupportedException('The client is not supported.');
-        } */
     }
 
     public function send(iterable $requests): array
