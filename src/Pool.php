@@ -6,14 +6,11 @@ namespace Jenky\Atlas\Pool\React;
 
 use Clue\React\Mq\Queue;
 use Jenky\Atlas\Contracts\ConnectorInterface;
-use Jenky\Atlas\Pool\Exceptions\UnsupportedException;
 use Jenky\Atlas\Pool\PoolInterface;
 use Jenky\Atlas\Pool\PoolTrait;
 use Jenky\Atlas\Request;
 use Jenky\Atlas\Response;
 use React\Async;
-use React\Http\Browser;
-use React\Promise;
 
 /**
  * @implements PoolInterface<Request|callable(ConnectorInterface): Response, Response>
@@ -22,17 +19,8 @@ final class Pool implements PoolInterface
 {
     use PoolTrait;
 
-    private ConnectorInterface $connector;
-
-    public function __construct(ConnectorInterface $connector)
+    public function __construct(private ConnectorInterface $connector)
     {
-        if ($connector->client() instanceof Client) {
-            $this->connector = clone $connector;
-        } elseif (method_exists($connector, 'withClient')) {
-            $this->connector = $connector->withClient(new Client(new Browser()));
-        } else {
-            throw new UnsupportedException('The client is not supported.');
-        }
     }
 
     public function send(iterable $requests): array
@@ -56,6 +44,6 @@ final class Pool implements PoolInterface
             }
         };
 
-        return Async\await(Promise\all(Async\parallel($promises($this->connector)))); //@phpstan-ignore-line
+        return Async\await(Async\parallel($promises($this->connector)));
     }
 }
