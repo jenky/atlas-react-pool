@@ -73,7 +73,7 @@ final class SymfonyClient implements AsyncClientInterface, ResetInterface
                 throw new RequestException($e->getMessage(), $request, null, $e);
             }
 
-            throw new NetworkException($e->getMessage(), $request, null, $e);
+            throw new NetworkException($e->getMessage(), $request, $e);
         }
     }
 
