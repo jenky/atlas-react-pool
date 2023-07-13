@@ -6,6 +6,7 @@ use Jenky\Atlas\Contracts\ConnectorInterface;
 use Jenky\Atlas\Middleware\Interceptor;
 use Jenky\Atlas\NullConnector;
 use Jenky\Atlas\Pool\React\Client;
+use Jenky\Atlas\Pool\React\GuzzleClient;
 use Jenky\Atlas\Pool\React\Pool;
 use Jenky\Atlas\Pool\React\SymfonyClient;
 use Jenky\Atlas\Response;
@@ -50,5 +51,10 @@ class ReactPoolTest extends TestCase
     public function test_react_pool_using_symfony_http_client(): void
     {
         $this->performTests($this->createConnector(new SymfonyClient()));
+    }
+
+    public function test_react_pool_using_guzzle(): void
+    {
+        $this->performTests($this->createConnector(new GuzzleClient()));
     }
 }
