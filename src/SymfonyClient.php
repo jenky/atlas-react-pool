@@ -68,7 +68,7 @@ final class SymfonyClient implements AsyncClientInterface, ResetInterface
             return Async\await($this->createResponse(
                 $this->client->request($request->getMethod(), (string) $request->getUri(), $options)
             ));
-        // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
         } catch (TransportExceptionInterface $e) {
             if ($e instanceof \InvalidArgumentException) {
                 throw new RequestException($e->getMessage(), $request, null, $e);
@@ -90,7 +90,7 @@ final class SymfonyClient implements AsyncClientInterface, ResetInterface
                 foreach ($values as $value) {
                     try {
                         $psrResponse = $psrResponse->withAddedHeader($name, $value);
-                    // @codeCoverageIgnoreStart
+                        // @codeCoverageIgnoreStart
                     } catch (\InvalidArgumentException) {
                         // ignore invalid header
                     }
