@@ -13,7 +13,6 @@ use Jenky\Atlas\Request;
 use Jenky\Atlas\Response;
 use React\Async;
 use React\Http\Browser;
-use React\Promise;
 use Symfony\Component\HttpClient\Psr18Client;
 
 /**

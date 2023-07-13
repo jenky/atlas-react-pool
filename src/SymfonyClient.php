@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jenky\Atlas\Pool\React;
 
 use Http\Discovery\Psr17FactoryDiscovery;
+use Jenky\Atlas\Exception\NetworkException;
 use Jenky\Atlas\Exception\RequestException;
 use Jenky\Atlas\Pool\AsyncClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -68,13 +69,11 @@ final class SymfonyClient implements AsyncClientInterface, ResetInterface
                 $this->client->request($request->getMethod(), (string) $request->getUri(), $options)
             ));
         } catch (TransportExceptionInterface $e) {
-            throw $e;
-            // if ($e instanceof \InvalidArgumentException) {
-            //     throw new RequestException($e->getMessage(), $request, null, $e);
-            // }
+            if ($e instanceof \InvalidArgumentException) {
+                throw new RequestException($e->getMessage(), $request, null, $e);
+            }
 
-            // // Network
-            // throw new RequestException($e->getMessage(), $request, null, $e);
+            throw new NetworkException($e->getMessage(), $request, null, $e);
         }
     }
 
