@@ -1,5 +1,5 @@
 {
-    "name": "jenky/atlas-pool-react",
+    "name": "jenky/atlas-react-pool",
     "description": "Send concurrent requests for Atlas using ReactPHP",
     "keywords": [
         "jenky",
@@ -11,7 +11,7 @@
         "await",
         "react"
     ],
-    "homepage": "https://github.com/jenky/atlas-pool-react",
+    "homepage": "https://github.com/jenky/atlas-react-pool",
     "license": "MIT",
     "authors": [
         {
@@ -33,8 +33,7 @@
         "jenky/atlas-mock-client": "^1.0",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.0",
-        "symfony/http-client": "^6.3",
-        "symfony/var-dumper": "^6.3"
+        "symfony/http-client": "^6.3"
     },
     "autoload": {
         "psr-4": {
