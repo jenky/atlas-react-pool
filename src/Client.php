@@ -16,7 +16,9 @@ final class Client implements AsyncClientInterface
 
     public function __construct(?Browser $browser = null)
     {
-        $this->browser = $browser ?? new Browser();
+        $this->browser = ($browser ?? new Browser())
+            ->withFollowRedirects(false)
+            ->withRejectErrorResponse(false);
     }
 
     public function sendRequest(RequestInterface $request): ResponseInterface
