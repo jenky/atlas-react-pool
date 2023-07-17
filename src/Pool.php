@@ -30,7 +30,7 @@ final class Pool implements PoolInterface
             error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
         }
 
-        $queue = new Queue($this->concurrency, null, fn ($cb) => Async\async($cb)());
+        $queue = new Queue($this->concurrency, null, static fn (\Closure $cb) => Async\async($cb)());
 
         $promises = static function (ConnectorInterface $connector) use ($requests, $queue) {
             foreach ($requests as $key => $request) {
